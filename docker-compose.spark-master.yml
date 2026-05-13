@@ -1,0 +1,21 @@
+services:
+  spark-master:
+    build:
+      context: ..
+      dockerfile: spark/Dockerfile
+    container_name: data-spark-master
+    network_mode: host
+    environment:
+      SPARK_MASTER_HOST: "${SPARK_MASTER_HOST}"
+      SPARK_MASTER_PORT: "${SPARK_MASTER_PORT:-7077}"
+      SPARK_MASTER_WEBUI_PORT: "${SPARK_MASTER_UI_PORT:-8081}"
+    command:
+      - /opt/spark/bin/spark-class
+      - org.apache.spark.deploy.master.Master
+      - --host
+      - ${SPARK_MASTER_HOST}
+      - --port
+      - ${SPARK_MASTER_PORT:-7077}
+      - --webui-port
+      - ${SPARK_MASTER_UI_PORT:-8081}
+    restart: unless-stopped
