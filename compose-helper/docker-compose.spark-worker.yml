@@ -10,6 +10,8 @@ services:
       - SPARK_LOCAL_IP=0.0.0.0
       - SPARK_PUBLIC_DNS=${CURRENT_IP}
       - SPARK_WORKER_PORT=${SPARK_WORKER_PORT}
+    extra_hosts:
+      - "${SPARK_MASTER_HOST:-spark-master}:${SPARK_MASTER_ADDRESS}"
     ports:
       - "8082:8081"
       - "${SPARK_WORKER_PORT}:${SPARK_WORKER_PORT}"
